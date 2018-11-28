@@ -1,0 +1,22 @@
+1. Generate the spikes from input image and running spike_train.py on the image.
+	For this set the path of input image in spike_train.py in variable "input_image"
+	To get the output spikes file change the variable "output_spikes"
+
+2. In the testbench instead of "./testbench_files/train4.txt" set the file "output_spikes" generated from spike_train.py
+
+3. Run the simulation.
+
+4. Run generating.py, this takes the output weights generated from running the simulation.
+
+5. Neuron image as neuron0.png, neuron1.png, neuron2.png.
+
+
+Thus 
+input_image --> spike_train.py --> output_spikes --> tb.v --> "./testbench_files/init_weight0.dat" (the trained image in weights form) --> generating.py --> neuron0.png
+
+
+
+Run generating.py file
+
+Change the path of three weight files in the end to the RAM weights generated from the main testbench file.
+The neuron images will be generated on running the file.

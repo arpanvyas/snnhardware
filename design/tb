@@ -1,0 +1,116 @@
+`timescale 1ns / 1ps
+
+module tb;
+
+	parameter	M=784, N=3, W=24 , REF = 30,
+					D = (0.15)*4096, TH = (2)*4096, PRES = 0, PMIN = -500*4096;
+
+	// Inputs to Top_Module
+	reg clk;
+	reg rst;
+	reg valid_ips;
+	reg [M-1:0]ips;
+	reg start_core_img;
+
+	// Outputs from Top Module
+	wire [N-1:0]ops;
+	wire TU_incre;
+	wire done_core_img;
+
+	// Instantiate the Unit Under Test (UUT)
+	core #(.M(M),.N(N),.W(W),.D(D),
+					 .TH(TH),.PRES(PRES),.PMIN(PMIN)) uut (
+		.clk(clk), 
+		.rst(rst), 
+		.valid_ips(valid_ips),
+		.start_core_img(start_core_img),
+		.ips(ips),
+		
+		.ops(ops), 
+		.TU_incre(TU_incre),
+		.done_core_img(done_core_img)
+	);
+
+	always begin
+		#10 clk=~clk;
+	end
+	
+	//file reading
+	integer 		f1,file1,f2,file2;
+	reg[M-1:0]	str1,str2;
+	
+	initial begin
+		// Initialize Inputs
+		clk = 0;
+		rst = 1;
+		valid_ips = 0;
+		ips = 0;
+		start_core_img = 0;
+		str1 = 0;
+		f1 = 0; file1 = 0;
+		f2 = 0; file2 = 0;
+		
+		file2 = $fopen("./testbench_files/output_spikes.dat","w");
+		@(posedge clk);
+		rst = 0;
+		
+		// Add stimulus here 
+		@(posedge clk);
+		
+		repeat(3) begin
+			file1 = $fopen("./testbench_files/train4.txt","r");
+			start_core_img = 1;
+			@(posedge clk);
+			start_core_img = 0;
+			while(~done_core_img) begin
+
+				@(posedge clk);@(posedge clk);@(posedge clk);@(posedge clk);
+				f1 	=	$fscanf(file1,"%b\n", str1[M-1:0]);
+				ips	=	str1;
+				valid_ips	= 1;
+				
+				@(posedge clk);
+				
+				valid_ips	<= 0;
+				
+				while(~TU_incre) begin
+								@(posedge clk);
+							end
+				$fwrite(file2,"%b\n",ops);
+				
+
+			end
+		
+		end
+		
+		repeat(3) begin
+			file1 = $fopen("./testbench_files/train9.txt","r");
+			start_core_img = 1;
+			@(posedge clk);
+			start_core_img = 0;
+			while(~done_core_img) begin
+
+				@(posedge clk);@(posedge clk);@(posedge clk);@(posedge clk);
+				f1 	=	$fscanf(file1,"%b\n", str1[M-1:0]);
+				ips	=	str1;
+				valid_ips	= 1;
+				
+				@(posedge clk);
+				
+				valid_ips	<= 0;
+				
+				while(~TU_incre) begin
+								@(posedge clk);
+							end
+				$fwrite(file2,"%b\n",ops);
+				
+
+			end
+		
+		end
+		
+		
+	end
+	
+endmodule
+
