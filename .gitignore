@@ -1,0 +1,8 @@
+*.bin
+*.dat
+python/trained_weights
+python/trained_weights_paper
+ver/LOGS
+ver/WAVES
+ver/SNAPSHOTS
+ver/signal_sets

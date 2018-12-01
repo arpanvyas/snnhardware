@@ -1,2 +1,0 @@
-s1(21Aug2018:03:04:25):  irun FPGA_Module.v control.v core.v count_muxer.v divide_by_3.v divide_replace.v input_neuron.v input_neuron_block.v ip_ram.v ips_generator.v ips_ram.v lfsr.v lfsr_test.v li.v lookup_minus.v lookup_plus.v maxer.v out_neu_blk.v out_nu_blk_tb.v output_neuron.v output_neuron_tb.v post_core.v pot_adder.v pot_adder_tb.v pre_core.v ram_weight.v random_number_generator.v rough.v tb.v tb_FPGA.v tb_rough.v time_unit.v train_test_classify.v weight_change.v window_freq.v window_freq_synthesis.v 
-s2(21Aug2018:03:06:32):  irun train_test_classify.v 

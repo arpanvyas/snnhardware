@@ -1,0 +1,9 @@
+project_dir=`cd ..;echo $PWD`
+export PROJECT_DIR=$project_dir
+export PROJECT_VER_DIR=$PROJECT_DIR/ver
+export PROJECT_RTL_DIR=$PROJECT_DIR/design
+export PROJECT_UTILS_DIR=$PROJECT_DIR/utils
+
+alias cd.snn='cd $PROJECT_RTL_DIR/modules/snn/'
+
+echo "PROJECT_DIR: $PROJECT_DIR"

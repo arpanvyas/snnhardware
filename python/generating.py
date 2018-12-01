@@ -9,7 +9,7 @@ from datetime import datetime
 
 now = datetime.now
 
-new_folder = '/home/arpan/Desktop/BTP/SNN/SNN Summer 17 Work/Python files/trained_weights_paper/{}'.format(now().strftime('%Y-%m-%d-%H:%M:%S'))
+new_folder = './trained_weights_paper/{}'.format(now().strftime('%Y-%m-%d-%H:%M:%S'))
 # actually make the folder
 mkdir(new_folder)
 
@@ -26,15 +26,15 @@ mkdir(new_folder)
 
 
 
-weight_neuron0 = '../Code till 4th May 2017/testbench_files/init_wt_wr0.dat'
-weight_neuron1 = '../Code till 4th May 2017/testbench_files/init_wt_wr1.dat'
-weight_neuron2 = '../Code till 4th May 2017/testbench_files/init_wt_wr2.dat'
-weight_neuron3 = '../Code till 4th May 2017/testbench_files/init_wt_wr3.dat'
-weight_neuron4 = '../Code till 4th May 2017/testbench_files/init_wt_wr4.dat'
-weight_neuron5 = '../Code till 4th May 2017/testbench_files/init_wt_wr5.dat'
-weight_neuron6 = '../Code till 4th May 2017/testbench_files/init_wt_wr6.dat'
-weight_neuron7 = '../Code till 4th May 2017/testbench_files/init_wt_wr7.dat'
-weight_neuron8 = '../Code till 4th May 2017/testbench_files/init_wt_wr8.dat'
+weight_neuron0 = '../ver/FEED/init_wt_wr0.dat'
+weight_neuron1 = '../ver/FEED/init_wt_wr1.dat'
+weight_neuron2 = '../ver/FEED/init_wt_wr2.dat'
+weight_neuron3 = '../ver/FEED/init_wt_wr3.dat'
+weight_neuron4 = '../ver/FEED/init_wt_wr4.dat'
+weight_neuron5 = '../ver/FEED/init_wt_wr5.dat'
+weight_neuron6 = '../ver/FEED/init_wt_wr6.dat'
+weight_neuron7 = '../ver/FEED/init_wt_wr7.dat'
+weight_neuron8 = '../ver/FEED/init_wt_wr8.dat'
 
 # a = Decimal(3.625)
 # a_split = (int(a//1),a%1)

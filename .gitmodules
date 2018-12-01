@@ -1,0 +1,3 @@
+[submodule "python_implementation"]
+	path = python_implementation
+	url = https://github.com/modwizcode/Spiking-Neural-Network.git
