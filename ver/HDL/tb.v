@@ -104,7 +104,7 @@ parameter M = 784, N = 8, W=24,
 		//file1 = $fopen("/home/vonfaust/data/snn/codebase/ver/FEED/img1.png","rb");
 	while(1) begin
         str2 = "0";
-		repeat(1) begin
+		repeat(2500) begin
 			start_main = 1;
 			@(posedge clk);
             # 0;
@@ -127,12 +127,13 @@ parameter M = 784, N = 8, W=24,
             # 0;
 			end
 			epoch = epoch + 1;
+            $display(epoch);
             # 0;
 			@(posedge clk);@(posedge clk);@(posedge clk);@(posedge clk);
 		end
 //			
         str2 = "1";
-		repeat(1) begin
+		repeat(2500) begin
 			start_main = 1;
 			@(posedge clk);
             # 0;
@@ -155,12 +156,13 @@ parameter M = 784, N = 8, W=24,
             # 0;
 			end
 			epoch = epoch + 1;
+            $display(epoch);
             # 0;
 			@(posedge clk);@(posedge clk);@(posedge clk);@(posedge clk);
 		end
 //				
         str2 = "2";
-		repeat(1) begin
+		repeat(2500) begin
 			start_main = 1;
 			@(posedge clk);
             # 0;
@@ -183,12 +185,13 @@ parameter M = 784, N = 8, W=24,
             # 0;
 			end
 			epoch = epoch + 1;
+            $display(epoch);
             # 0;
 			@(posedge clk);@(posedge clk);@(posedge clk);@(posedge clk);
 		end
 //
 	        str2 = "3";
-		repeat(1) begin
+		repeat(2500) begin
 			start_main = 1;
 			@(posedge clk);
             # 0;
@@ -211,11 +214,12 @@ parameter M = 784, N = 8, W=24,
             # 0;
 			end
 			epoch = epoch + 1;
+            $display(epoch);
             # 0;
 			@(posedge clk);@(posedge clk);@(posedge clk);@(posedge clk);
 		end
 //							
-		
+		$finish;
 	
 	end
 end

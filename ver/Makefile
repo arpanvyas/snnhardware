@@ -22,8 +22,8 @@ export MODULE
 
 
 
-IRUN_OPTS += -vlog_ext .v,.vh $(IRUN_PERF_OPTS) 
-IRUN_PERF_OPTS += -access +r ncelab -delay_mode zero ncsim -mcdump
+IRUN_OPTS += -access +r -vlog_ext .v,.vh #$(IRUN_PERF_OPTS) 
+IRUN_PERF_OPTS += ncelab -delay_mode zero ncsim -mcdump
 #IRUN_RTLOPTS += $(IRUN_OPTS) -elaborate
 #IRUN_TBOPTS += -elaborate
 IRUN_GUIOPTS += -gui 
@@ -42,7 +42,7 @@ INCLUDE_DIRS += -incdir $$PROJECT_VER_DIR/HDL/
 
 
 #LOG FILES
-IRUN_OPTS += -logfile $$PROJECT_VER_DIR/LOGS/irun.log
+IRUN_OPTS += -logfile $$PROJECT_VER_DIR/LOGS/irun.log -mccodegen -mcmaxcores 4
 #IRUN_RTLOPTS += -log_ncelab $$PROJECT_VER_DIR/LOGS/$(MODULE)_rtl_ncelab.log -log_ncvlog $$PROJECT_VER_DIR/LOGS/$(MODULE)_rtl_ncvlog.log
 IRUN_TBOPTS += -log_ncelab $$PROJECT_VER_DIR/LOGS/$(MODULE)_tb_ncelab.log -log_ncvlog $$PROJECT_VER_DIR/LOGS/$(MODULE)_tb_ncvlog.log
 IRUN_GUIOPTS += -log_ncsim $$PROJECT_VER_DIR/LOGS/$(TC)_$(SEED)_$(MODULE).log -k $$PROJECT_VER_DIR/LOGS/$(TC)_$(SEED)_$(MODULE).key
