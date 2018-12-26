@@ -104,7 +104,7 @@ parameter M = 784, N = 8, W=24,
 		//file1 = $fopen("/home/vonfaust/data/snn/codebase/ver/FEED/img1.png","rb");
 	while(1) begin
         str2 = "0";
-		repeat(2500) begin
+		repeat(100) begin
 			start_main = 1;
 			@(posedge clk);
             # 0;
@@ -133,7 +133,7 @@ parameter M = 784, N = 8, W=24,
 		end
 //			
         str2 = "1";
-		repeat(2500) begin
+		repeat(100) begin
 			start_main = 1;
 			@(posedge clk);
             # 0;
@@ -161,65 +161,65 @@ parameter M = 784, N = 8, W=24,
 			@(posedge clk);@(posedge clk);@(posedge clk);@(posedge clk);
 		end
 //				
-        str2 = "2";
-		repeat(2500) begin
-			start_main = 1;
-			@(posedge clk);
-            # 0;
-			start_main = 0;
-			i1 = 0;
-			$readmemb({`FEED,"img",str2,".bin"},image_reg);
-			//f1=$fread(image_reg,file1);
-			while(i1<M/4) begin
-				valid_image	= 1;
-				image_in	=	image_reg[i1];
-				@(posedge clk);
-                # 0;
-				i1 = i1 + 1;
-			end
-			valid_image = 0;
-			i1 = 0;
-			
-			while(~valid_all) begin
-			@(posedge clk);
-            # 0;
-			end
-			epoch = epoch + 1;
-            $display(epoch);
-            # 0;
-			@(posedge clk);@(posedge clk);@(posedge clk);@(posedge clk);
-		end
-//
-	        str2 = "3";
-		repeat(2500) begin
-			start_main = 1;
-			@(posedge clk);
-            # 0;
-			start_main = 0;
-			i1 = 0;
-			$readmemb({`FEED,"img",str2,".bin"},image_reg);
-			//f1=$fread(image_reg,file1);
-			while(i1<M/4) begin
-				valid_image	= 1;
-				image_in	=	image_reg[i1];
-				@(posedge clk);
-                # 0;
-				i1 = i1 + 1;
-			end
-			valid_image = 0;
-			i1 = 0;
-			
-			while(~valid_all) begin
-			@(posedge clk);
-            # 0;
-			end
-			epoch = epoch + 1;
-            $display(epoch);
-            # 0;
-			@(posedge clk);@(posedge clk);@(posedge clk);@(posedge clk);
-		end
+//        str2 = "2";
+//		repeat(2500) begin
+//			start_main = 1;
+//			@(posedge clk);
+//            # 0;
+//			start_main = 0;
+//			i1 = 0;
+//			$readmemb({`FEED,"img",str2,".bin"},image_reg);
+//			//f1=$fread(image_reg,file1);
+//			while(i1<M/4) begin
+//				valid_image	= 1;
+//				image_in	=	image_reg[i1];
+//				@(posedge clk);
+//                # 0;
+//				i1 = i1 + 1;
+//			end
+//			valid_image = 0;
+//			i1 = 0;
+//			
+//			while(~valid_all) begin
+//			@(posedge clk);
+//            # 0;
+//			end
+//			epoch = epoch + 1;
+//            $display(epoch);
+//            # 0;
+//			@(posedge clk);@(posedge clk);@(posedge clk);@(posedge clk);
+//		end
+////
+//	        str2 = "3";
+//		repeat(2500) begin
+//			start_main = 1;
+//			@(posedge clk);
+//            # 0;
+//			start_main = 0;
+//			i1 = 0;
+//			$readmemb({`FEED,"img",str2,".bin"},image_reg);
+//			//f1=$fread(image_reg,file1);
+//			while(i1<M/4) begin
+//				valid_image	= 1;
+//				image_in	=	image_reg[i1];
+//				@(posedge clk);
+//                # 0;
+//				i1 = i1 + 1;
+//			end
+//			valid_image = 0;
+//			i1 = 0;
+//			
+//			while(~valid_all) begin
+//			@(posedge clk);
+//            # 0;
+//			end
+//			epoch = epoch + 1;
+//            $display(epoch);
+//            # 0;
+//			@(posedge clk);@(posedge clk);@(posedge clk);@(posedge clk);
+//		end
 //							
-		$finish;
+//		$finish;
 	
 	end
 end
