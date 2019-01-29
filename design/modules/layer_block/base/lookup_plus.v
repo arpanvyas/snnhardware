@@ -4,12 +4,12 @@ module lookup_plus(
 	input		clk,
 	input		rst,
 	input		[7:0]lut_in,
-	output	[23:0]lut_out
+	output	[`W-1:0]lut_out
     );
 
 wire		clk,rst;
 wire		[7:0]lut_in;
-reg		[23:0]lut_out;
+reg		[`W-1:0]lut_out;
 
 
 always @(posedge clk)

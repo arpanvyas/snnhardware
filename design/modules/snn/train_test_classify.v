@@ -35,7 +35,7 @@ wire	start_core_img;
 wire	deciding;
 wire	valid_all;
 	
-control #(.M(M),.N(N),.W(W),.D(D),
+control #(.M(`M),.N(`N),.W(`W),.D(D),
 					 .TH(TH),.PRES(PRES),.PMIN(PMIN)) control (	.clk(clk),
 				.rst(rst),
 				.start_main(start_main),
@@ -59,11 +59,11 @@ control #(.M(M),.N(N),.W(W),.D(D),
 //New Inputs to pre_core
 
 wire	TU_incre;
-wire	[W-1:0] threshold;
-wire	[M-1:0] ips;
+wire	[`W-1:0] threshold;
+wire	[`M-1:0] ips;
 wire	valid_ips;
 
-pre_core #(.M(M),.D(D),.W(W),.N(N),.TH(TH),.REF(REF),
+pre_core #(.M(`M),.D(D),.W(`W),.N(`N),.TH(TH),.REF(REF),
 		.PRES(PRES),.PMIN(PMIN),.WMAX(WMAX),.WMIN(WMIN),.IM_WID(IM_WID),
 		.IM_HEI(IM_HEI)) pre_core(
 		.clk(clk), 
@@ -85,9 +85,9 @@ pre_core #(.M(M),.D(D),.W(W),.N(N),.TH(TH),.REF(REF),
 	);
 	
 //New Inputs to core	
-wire	[N-1:0]	ops;
+wire	[`N-1:0]	ops;
 	
-core #(.M(M),.D(D),.W(W),.N(N),.TH(TH),.REF(REF),
+core #(.M(`M),.D(D),.W(`W),.N(`N),.TH(TH),.REF(REF),
 		.PRES(PRES),.PMIN(PMIN),.WMAX(WMAX),.WMIN(WMIN)) core (
 		.clk(clk), 
 		.rst(rst), 
@@ -104,7 +104,7 @@ core #(.M(M),.D(D),.W(W),.N(N),.TH(TH),.REF(REF),
 
 
 
-post_core #(.M(M),.D(D),.W(W),.N(N),.TH(TH),.REF(REF),
+post_core #(.M(`M),.D(D),.W(`W),.N(`N),.TH(TH),.REF(REF),
 		.PRES(PRES),.PMIN(PMIN),.WMAX(WMAX),.WMIN(WMIN)) post_core (
 		.clk(clk), 
 		.rst(rst),

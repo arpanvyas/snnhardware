@@ -1,10 +1,10 @@
 `include "header.vh"
 
-module count_muxer(
+module count_muxer_h1(
     input 				clk,
     input 				rst,
-    input  [8*`M-1:0] count,
-	 input  [`N-1:0]	start_wch,
+    input  [8*`N2-1:0] count,
+	 input  [`N3-1:0]	start_wch,
     output [9:0] 		ip_select,
     output [23:0] 		del_w_plus,
     output [23:0] 		del_w_minus
@@ -26,7 +26,7 @@ begin
 	end else begin
 		if(start_wch_or) begin
 		ip_select	<= 1;
-		end else if(ip_select==M-1) begin
+		end else if(ip_select==`N2-1) begin
 		ip_select	<= 0;
 		end else if(ip_select!=0) begin
 		ip_select	<= ip_select + 1;
@@ -34,8 +34,8 @@ begin
 	end	
 end
 
-wire[7:0]	count_unpacked[M-1:0];
-`UNPACK_ARRAY(8,M,count_unpacked,count)			
+wire[7:0]	count_unpacked[`N2-1:0];
+`UNPACK_ARRAY(8,`N2,count_unpacked,count)			
 reg[7:0]	count_select;
 
   //muxing to get count_select <-- ip_select
@@ -49,8 +49,8 @@ begin
 end
 
 	//lookup table: del_w_plus/minus <-- count_select
-lookup_plus plus_table(.clk(clk),.rst(rst),.lut_in(count_select),.lut_out(del_w_plus));
-lookup_minus minus_table(.clk(clk),.rst(rst),.lut_in(count_select),.lut_out(del_w_minus));
+lookup_plus_h1 plus_table(.clk(clk),.rst(rst),.lut_in(count_select),.lut_out(del_w_plus));
+lookup_minus_h1 minus_table(.clk(clk),.rst(rst),.lut_in(count_select),.lut_out(del_w_minus));
 
 
 endmodule

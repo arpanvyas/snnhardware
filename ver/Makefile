@@ -58,6 +58,7 @@ IRUN_GUIOPTS += -input $$PROJECT_VER_DIR/TCL/force.do
 
 #SOURCE
 RTL_FILES += $$PROJECT_RTL_DIR/modules/snn/*
+RTL_FILES += $$PROJECT_RTL_DIR/modules/layer_block/base/*
 TB_FILES += $$PROJECT_VER_DIR/HDL/tb.v
 
 #WORKDIR and SNAPSHOTS
@@ -66,6 +67,16 @@ TB_FILES += $$PROJECT_VER_DIR/HDL/tb.v
 
 #ADDITIONAL FORCS
 IRUN_GUIOPTS += -input $$PROJECT_VER_DIR/TCL/force_snn.do
+
+##FOR SINGLE OR TWO LAYERS
+ifeq ($(TWO_LAYERS),YES)
+IRUN_TBOPTS += -define TWO_LAYERS
+RTL_FILES += $$PROJECT_RTL_DIR/modules/layer_block/hlayer1/*
+else
+ifeq ($(ONE_LAYER),YES)
+IRUN_TBOPTS += -define ONE_LAYER
+endif
+endif
 
 ###########################################################
 #TARGETS

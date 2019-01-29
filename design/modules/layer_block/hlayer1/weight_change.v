@@ -1,13 +1,13 @@
 `include "header.vh"
 
-module weight_change(
+module weight_change_h1(
 	input				clk,
 	input				rst,
 	input				start_wch,
 	input				spike_hold,//tells to increase(1) or decrease(0)
 	input[9:0]		ip_select,
-	input[23:0]		del_w_plus,
-	input[23:0]		del_w_minus,
+	input[`W-1:0]		del_w_plus,
+	input[`W-1:0]		del_w_minus,
 	input[`W-1:0]	data_r,
 	
 	output[`W-1:0]	data_w,
@@ -23,25 +23,25 @@ parameter M = 784, N = 8, W=24,
 			 PRES = 0, PMIN = -500*4096, WMAX = 1.5*4096,
 			 WMIN = -1.2*4096;		
 			 
-wire signed [W-1:0] data_r;
-reg signed[23:0]	wold[2:0];
-reg[23:0] ip_select_h[4:0];
+wire signed [`W-1:0] data_r;
+reg signed[`W-1:0]	wold[2:0];
+reg[`W-1:0] ip_select_h[4:0];
 reg		start_wch_h[4:0];
-wire signed[23:0] wmax;
-wire signed[23:0] wmin;
-reg signed[23:0] wdiff_plus;
-reg signed[23:0] wdiff_minus;
-reg signed[23:0] multi_plus;
-reg signed[23:0] multi_minus;
-reg signed[23:0] multi_plus_shifted;
-reg signed[23:0] multi_minus_shifted;
-reg[23:0] add;
+wire signed[`W-1:0] wmax;
+wire signed[`W-1:0] wmin;
+reg signed[`W-1:0] wdiff_plus;
+reg signed[`W-1:0] wdiff_minus;
+reg signed[`W-1:0] multi_plus;
+reg signed[`W-1:0] multi_minus;
+reg signed[`W-1:0] multi_plus_shifted;
+reg signed[`W-1:0] multi_minus_shifted;
+reg[`W-1:0] add;
 assign wmax = WMAX;
 assign wmin = WMIN;
 
 assign addr_w = ip_select_h[0];
 assign addr_r = ip_select;
-reg signed[W-1:0]	data_w;
+reg signed[`W-1:0]	data_w;
 reg	we;
 //FSM for Work Flow
 //States
@@ -80,7 +80,7 @@ begin
 						endcase
 					end
 					
-					if(ip_select_h[0]==M-1) begin
+					if(ip_select_h[0]==`N2-1) begin
 					we	<= 0;
 					valid_wch	<= 1;
 					state_reg	<= idle;

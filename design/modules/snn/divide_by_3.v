@@ -9,8 +9,8 @@ module div_by_3(
 
 parameter W=24;
 
-reg[W-1:0]	  op;
-reg[W-1:0]    op1,op2,op3,op4,op5;
+reg[`W-1:0]	  op;
+reg[`W-1:0]    op1,op2,op3,op4,op5;
 always@(posedge clk)
 begin
 	if(div_enable) begin

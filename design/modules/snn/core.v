@@ -46,10 +46,10 @@ time_unit  tu(
 //Input Neuron Block Declarations
 
 
-wire[M-1:0]			spike_ip_nub;
-wire[8*M-1:0]		count;
+wire[`M-1:0]			spike_ip_nub;
+wire[8*`M-1:0]		count;
 
-ip_nu_blk #(.M(M),.W(W)) input_neuron_block(
+ip_nu_blk #(.M(`M),.W(`W)) input_neuron_block(
 	 .clk(clk),
 	 .rst(rst),
 	 .spike_in(ips),
@@ -60,23 +60,6 @@ ip_nu_blk #(.M(M),.W(W)) input_neuron_block(
 	 .valid_ip_nub(valid_ip_nub)
 );
 
-
-//Output Neuron Block Declarations
-wire[N-1:0]		ops;
-
-out_nu_blk #(.M(M),.D(D),.W(W),.N(N),.TH(TH),.REF(REF),
-				.PRES(PRES),.PMIN(PMIN),.WMAX(WMAX),.WMIN(WMIN)) output_neuron_block(
-				.clk(clk),
-				.rst(rst),
-				.start_op_nub(start_op_nub),
-				.spike_ip_nub(spike_ip_nub),
-				.start_core_img(start_core_img),
-				.TU_incre(TU_incre),
-				.count(count),
-				.valid_op_nub(valid_op_nub),
-				.spike_op_nub(ops)
-    );
-	 
 	 
 //Taking the variable threshold
 reg signed	[23:0] threshold;
@@ -92,5 +75,80 @@ begin
 	end
 end
 	 
+
+
+`ifdef TWO_LAYERS
+//Output Neuron Block Declarations
+wire[`N2-1:0]	ops_h1;
+wire[`N2*8-1:0] count_out_h1;
+wire            valid_op_nub_h1;
+
+
+
+out_nu_blk #(.M(`M),.D(D),.W(`W),.N(`N),.TH(TH),.REF(REF),
+				.PRES(PRES),.PMIN(PMIN),.WMAX(WMAX),.WMIN(WMIN)) output_neuron_block(
+				.clk(clk),
+				.rst(rst),
+				.start_op_nub(start_op_nub),
+				.spike_ip_nub(spike_ip_nub),
+				.start_core_img(start_core_img),
+				.TU_incre(TU_incre),
+				.count(count),
+
+                //outputs
+                .count_out(count_out_h1),
+				.valid_op_nub(valid_op_nub_h1),
+				.spike_op_nub(ops_h1)
+    );
+	
+//Output Neuron Block Declarations
+wire[`N-1:0]    ops;
+wire[`N*8-1:0]  count_out;
+ 
+out_nu_blk_h1 #(.M(`M),.D(D),.W(`W),.N(`N),.TH(TH),.REF(REF),
+				.PRES(PRES),.PMIN(PMIN),.WMAX(WMAX),.WMIN(WMIN)) output_neuron_block_h1(
+				.clk(clk),
+				.rst(rst),
+				.start_op_nub(valid_op_nub_h1),
+				.spike_ip_nub(ops_h1),
+				.start_core_img(start_core_img),
+				.TU_incre(TU_incre),
+				.count(count_out_h1),
+
+                .count_out(count_out),
+				.valid_op_nub(valid_op_nub),
+				.spike_op_nub(ops)
+    );
+	 
+
+`endif
+
+`ifdef ONE_LAYER
+//Output Neuron Block Declarations
+wire[`N-1:0]    ops;
+wire[`N*8-1:0]  count_out;
+ 
+out_nu_blk #(.M(`M),.D(D),.W(`W),.N(`N),.TH(TH),.REF(REF),
+				.PRES(PRES),.PMIN(PMIN),.WMAX(WMAX),.WMIN(WMIN)) output_neuron_block(
+				.clk(clk),
+				.rst(rst),
+				.start_op_nub(valid_op_nub),
+				.spike_ip_nub(ops),
+				.start_core_img(start_core_img),
+				.TU_incre(TU_incre),
+				.count(count_out),
+
+                .count_out(count_out),
+				.valid_op_nub(valid_op_nub),
+				.spike_op_nub(ops)
+    );
+	 
+
+
+
+`endif
+
+
+
 endmodule
 

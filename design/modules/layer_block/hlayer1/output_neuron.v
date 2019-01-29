@@ -1,23 +1,24 @@
 `include "header.vh"
 
-module out_nu(
+module out_nu_h1(
 		input				clk,rst,
 		input				TU_incre,
 		input				start_core_img,
 		input 			isor_0_start,
 		input				isor_1_start,
 		input				li,
-		input[`M-1:0]	spike_ip_nub,
+		input[`N2-1:0]	spike_ip_nub,
 		input				valid_li,
 		input				won_lost,
 		input[9:0]		ip_select,
-		input[23:0]		del_w_plus,
-		input[23:0]		del_w_minus,
+		input[`W-1:0]		del_w_plus,
+		input[`W-1:0]		del_w_minus,
 		
 		output			start_wch,
 		output			spike_op_nu,
 		output			potential,
 		output			start_li,
+        output[7:0]     counter_fast,
 		output 			valid_nu
     );
 parameter M = 784, N = 8, W=24,
@@ -249,9 +250,9 @@ begin
 end 
 
 //Controlling Weight RAM
-wire signed[W-1:0]			potential;
-wire[W-1:0]		data_w;
-wire[W-1:0]		data_r;
+wire signed[`W-1:0]			potential;
+wire[`W-1:0]		data_w;
+wire[`W-1:0]		data_r;
 reg[9:0]			addr_r;
 wire[9:0]		addr_w;
 wire[9:0]		pot_addr_r;
@@ -282,11 +283,35 @@ begin
 	endcase
 end
 
+reg [7:0] counter;
+wire [7:0] counter_fast;
+
+always @(posedge clk, posedge rst)
+begin
+	if(rst==1)
+		begin
+			counter 		<= 21;
+		end
+	else begin
+		if(spike_op_nu==1) begin
+            counter <= 0;
+        end	else begin
+		    if(counter<21)
+		        counter <= counter + 1;
+		    end        
+		    if(start_core_img) begin
+		    	counter	<= 21;
+		    end
+	end
+end
+
+assign counter_fast = (spike_op_nu) ? (8'b0000_0000) : (counter<21) ? (counter+1) : (counter) ;
+
 
 
 //make PP here: has ref and dec
-pot_adder #(.M(M),.D(D),.TH(TH),.REF(REF),
-				.PRES(PRES),.PMIN(PMIN),.W(W),.N(N),.WMAX(WMAX),.WMIN(WMIN)) potential_adder_unit(
+pot_adder_h1 #(.M(`N2),.D(D),.TH(TH),.REF(REF),
+				.PRES(PRES),.PMIN(PMIN),.W(`W),.N(`N3),.WMAX(WMAX),.WMIN(WMIN)) potential_adder_unit(
 
 		.clk(clk),
 		.rst(rst),
@@ -313,8 +338,8 @@ pot_adder #(.M(M),.D(D),.TH(TH),.REF(REF),
 
 
 //weight change here
-weight_change #(.M(M),.D(D),.TH(TH),.REF(REF),
-				.PRES(PRES),.PMIN(PMIN),.W(W),.N(N),.WMAX(WMAX),.WMIN(WMIN)) wch(
+weight_change_h1 #(.M(`N2),.D(D),.TH(TH),.REF(REF),
+				.PRES(PRES),.PMIN(PMIN),.W(`W),.N(`N3),.WMAX(WMAX),.WMIN(WMIN)) wch(
 	.clk(clk),
 	.rst(rst),
 	.start_wch(start_wch),
@@ -331,8 +356,8 @@ weight_change #(.M(M),.D(D),.TH(TH),.REF(REF),
 	.valid_wch(valid_wch) 
 );
 
-ram_weight #(.M(M),.D(D),.TH(TH),.REF(REF),
-				.PRES(PRES),.PMIN(PMIN),.W(W),.N(N),.OP_NUM(OP_NUM)) ram_wt(
+ram_weight_h1 #(.M(`N2),.D(D),.TH(TH),.REF(REF),
+				.PRES(PRES),.PMIN(PMIN),.W(`W),.N(`N3),.OP_NUM(OP_NUM)) ram_wt(
 	.clk(clk),
 	.data_w(data_w),
 	.addr_r(addr_r),

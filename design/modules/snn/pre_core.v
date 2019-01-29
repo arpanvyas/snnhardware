@@ -23,13 +23,13 @@ module pre_core(
 parameter M=784, N=8, W=24, D = 1,IM_WID = 28, IM_HEI = 28,
 			 REF = 30, TH = 5, PRES = 0, PMIN = -1;	 
 
-reg[7:0]		 img_buff[M-1:0];
-reg[7:0]		 rf_freq_buffer[M-1:0];
+reg[7:0]		 img_buff[`M-1:0];
+reg[7:0]		 rf_freq_buffer[`M-1:0];
 
 
 integer counter;
 integer coring_counter;
-reg[N-1:0]	 rfbuffering;
+reg[`N-1:0]	 rfbuffering;
 reg	rf_buffering_done;
 reg	ips_gen_driver;
 reg	valid_buffering;
@@ -57,15 +57,15 @@ wire			next_ips_gen;
 wire			next_ips_gen_maxer;
 reg			next_ips_gen_core;
 
-wire[M-1:0]	ips_gen_out;
-wire[M-1:0] ips;
+wire[`M-1:0]	ips_gen_out;
+wire[`M-1:0] ips;
 assign		ips = ips_gen_out;
 
 reg	valid_ips_h, valid_ips;
 reg 	once_coring_counter;
 
 
-wire[M*8-1:0] rf_freq_packed;
+wire[`M*8-1:0] rf_freq_packed;
 
 always @(*)
 begin
@@ -384,7 +384,7 @@ begin
 					rf_freq_buffer[rf_freq_index] <= val_out;
 					rf_freq_index					<= rf_freq_index+1;	
 					
-					if(rf_freq_index==M-1) begin
+					if(rf_freq_index==`M-1) begin
 						 rf_freq_index <= 0;
 						 rfbuffering   <= 0;
 						 valid_rfing   <= 1;	 
@@ -456,7 +456,7 @@ window_freq win_freq(
 );
 
 
-`PACK_ARRAY(8,M,rf_freq_buffer,rf_freq_packed)
+`PACK_ARRAY(8,`M,rf_freq_buffer,rf_freq_packed)
 
 ips_generator ips_gen(  
 	  .clk(clk),
@@ -484,7 +484,7 @@ begin
 	end
 	if(valid_rfing) begin
 				file2 = $fopen({`FEED,"image_ret.bin"},"w");
-			for(i1=0;i1<M;i1=i1+1) begin
+			for(i1=0;i1<`M;i1=i1+1) begin
 				$fwrite(file2,"%b\n",rf_freq_buffer[i1]);
 			end
 			$fclose(file2);

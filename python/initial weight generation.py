@@ -86,51 +86,19 @@ for i in range(par.n):
  	for j in range(par.m):
  		a = random.uniform(0,0.4*par.scale)
  		synapse[i][j] = a
-fl0 = open('init_weight0.dat', 'w')
-fl1 = open('init_weight1.dat', 'w')
-fl2 = open('init_weight2.dat', 'w')
-fl3 = open('init_weight3.dat', 'w')
-fl4 = open('init_weight4.dat', 'w')
-fl5 = open('init_weight5.dat', 'w')
-fl6 = open('init_weight6.dat', 'w')
-fl7 = open('init_weight7.dat', 'w')
+files_all = []
 
-for i in range(par.m):
-  s = int2bin(synapse[0][i],par.fr_bits, par.fr_bits+par.int_bits)
-  fl0.write(s + '\n')
-for i in range(par.m):
- 	s = int2bin(synapse[1][i],par.fr_bits, par.fr_bits+par.int_bits)
- 	fl1.write(s + '\n')
-for i in range(par.m):
- 	s = int2bin(synapse[2][i],par.fr_bits, par.fr_bits+par.int_bits)
- 	fl2.write(s + '\n')		
-for i in range(par.m):
- 	s = int2bin(synapse[3][i],par.fr_bits, par.fr_bits+par.int_bits)
- 	fl3.write(s + '\n')		
-for i in range(par.m):
- 	s = int2bin(synapse[4][i],par.fr_bits, par.fr_bits+par.int_bits)
- 	fl4.write(s + '\n')		
-for i in range(par.m):
- 	s = int2bin(synapse[5][i],par.fr_bits, par.fr_bits+par.int_bits)
- 	fl5.write(s + '\n')		
-for i in range(par.m):
- 	s = int2bin(synapse[6][i],par.fr_bits, par.fr_bits+par.int_bits)
- 	fl6.write(s + '\n')		 	
-for i in range(par.m):
- 	s = int2bin(synapse[7][i],par.fr_bits, par.fr_bits+par.int_bits)
- 	fl7.write(s + '\n')		
+for i in range(par.n):
+    fl = open('../ver/FEED/init_weight_h1_'+str(i)+'.dat','w')
+    for j in range(par.m):
+        s = int2bin(synapse[i][j],par.fr_bits, par.fr_bits+par.int_bits)
+        fl.write(s + '\n')
+    fl.close()
+
 
 print int2bin(.4,12,24)
 
 
-fl0.close()
-fl1.close()
-fl2.close()
-fl3.close()
-fl4.close()
-fl5.close()
-fl6.close()
-fl7.close()
 
 
 # fl = open('look_ups/test_synapse.txt','w')

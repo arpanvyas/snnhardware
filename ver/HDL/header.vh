@@ -6,8 +6,18 @@
 `define W 24
 `define M 784
 `define N 8
+`define N1 `M
 
-`define FEED "/home/vonfaust/data/snn/codebase/ver/FEED/"
+`ifdef TWO_LAYERS
+`define N2 64
+`define N3 `N
+`endif
+
+`ifdef ONE_LAYER
+`define N2 `N
+`endif
+
+`define FEED "/home/vonfaust/data/snn/hdl/ver/FEED/"
 
 `define PACK_ARRAY(PK_WIDTH,PK_LEN,PK_SRC,PK_DEST) \
 genvar pk_idx; \

@@ -23,8 +23,8 @@ reg		div_enable;
 reg	start_ips_gen;
 reg	next_ips_gen;
 reg	maxer_valid;
-wire[W-1:0]	threshold;
-reg[W-1:0] threshold_sum;
+wire[`W-1:0]	threshold;
+reg[`W-1:0] threshold_sum;
 
 always@(posedge clk, posedge rst)
 begin

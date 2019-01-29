@@ -1,6 +1,6 @@
 `include "header.vh"
 
-module pot_adder(
+module pot_adder_h1(
 		input				clk,rst,
 		input				TU_incre,
 		input				start_core_img,
@@ -9,7 +9,7 @@ module pot_adder(
 		input				start_pp3m,
 		input				start_pp3,
 		input				won_lost_hold,
-		input[`M-1:0]	spike_ip_nub,
+		input[`N2-1:0]	spike_ip_nub,
 		input[`W-1:0]	data_r,
 		
 		output[9:0]		addr_r,
@@ -29,12 +29,12 @@ parameter M = 784, N = 8, W=32,
 			 PRES = 0, PMIN = -500*4096, WMAX = 1.5*4096,
 			 WMIN = -1.2*4096;	
 			 
-reg signed[W-1:0] threshold,pot_rest,decay,pot_min;			 
-wire	signed[W-1:0] data_r;
+reg signed[`W-1:0] threshold,pot_rest,decay,pot_min;			 
+wire	signed[`W-1:0] data_r;
 
 //FSM and Working unit for PP
 	
-reg signed[W-1:0]potential;
+reg signed[`W-1:0]potential;
 reg				  spike_pp;//only significant in pp2 mode, for other mode the out_nu already knows
 reg				  valid_pp1;
 reg				  valid_pp2;
@@ -113,17 +113,17 @@ begin
 					end else begin
 						index 	 <= index + 1;
 						addr_r	 <= addr_r + 1;
-						if(index<M) begin
+						if(index<`N2) begin
 							if(spike_ip_nub[index]) begin
 								potential <= potential + data_r;
 							end
 							state_reg <= state_reg;
 							
-						if(index==M-2 || index ==M-1) begin
+						if(index==`N2-2 || index ==`N2-1) begin
 							addr_r	<= 0;
 						end
 						
-						end else if(index==M) begin
+						end else if(index==`N2) begin
 							if(potential<PMIN) begin
 								potential <= PRES;
 								valid_pp2 <= 1'b1;
@@ -156,17 +156,17 @@ begin
 
 					index <= index + 1;
 					addr_r <= addr_r + 1;
-					if(index<M) begin
+					if(index<`N2) begin
 						if(spike_ip_nub[index]) begin
 							potential <= potential + data_r;
 						end
 						state_reg <= state_reg;
 					
-						if(index==M-2 || index ==M-1) begin
+						if(index==`N2-2 || index ==`N2-1) begin
 							addr_r	<= 0;
 						end
 
-					end else if (index==M) begin
+					end else if (index==`N2) begin
 					valid_pp3m	<= 1'b1;
 					state_reg	<= pp3_b;
 					index			<= 0;
@@ -266,7 +266,7 @@ begin
 	threshold	<= 0;
 	end else begin
 		if(tb.uut.core.valid_maxing) begin
-			threshold <= (tb.uut.core.threshold);
+			threshold <= (tb.uut.core.threshold/3);
 		end
 	end
 end

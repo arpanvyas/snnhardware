@@ -1,17 +1,17 @@
 `include "header.vh"
 
-module li(
+module li_h1(
     input clk,rst,
     input start_li,
-    input [`N*`W-1:0] potentials,
-	 output[`N-1:0] won_lost,	
+    input [`N3*`W-1:0] potentials,
+	 output[`N3-1:0] won_lost,	
     output valid_li,
 	 output first_spike
     );
 
 parameter W = 24, N = 8, TH = 90;
 
-reg [W-1:0] unpacked_pot[15:0];
+reg [`W-1:0] unpacked_pot[15:0];
 
 localparam [2:0]	idle		= 3'b000,
 					compare		= 3'b001,
@@ -49,11 +49,11 @@ always@(posedge clk, posedge rst) begin
 end
 
 
-reg [W-1:0]first_stage[7:0];
-reg [W-1:0]second_stage[3:0];
-reg [W-1:0]third_stage[1:0];
-reg [W-1:0]final;
-reg [N-1:0]won_lost;
+reg [`W-1:0]first_stage[7:0];
+reg [`W-1:0]second_stage[3:0];
+reg [`W-1:0]third_stage[1:0];
+reg [`W-1:0]final;
+reg [`N3-1:0]won_lost;
 reg valid_li;
 reg first_spike;
 

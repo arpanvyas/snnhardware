@@ -24,8 +24,8 @@ parameter M = 784, N = 8, W=24,
 
 reg		testing,classifying,valid_deciding;
 reg[7:0]	image_label;
-reg[7:0]	ops_counter[N-1:0];
-reg[7:0]	opnu_label[N-1:0];
+reg[7:0]	ops_counter[`N-1:0];
+reg[7:0]	opnu_label[`N-1:0];
 integer	i,index,max_counter,zero_loop;
 reg[7:0]	max_val,max_index;
 
@@ -39,7 +39,7 @@ begin
 		max_counter <= 0;
 		max_index	<= 0;
 		max_val		<= 0;
-			for(zero_loop=0;zero_loop<N;zero_loop=zero_loop+1) begin
+			for(zero_loop=0;zero_loop<`N;zero_loop=zero_loop+1) begin
 				ops_counter[zero_loop] <= 0;
 				opnu_label[zero_loop]	<= 0;
 			end
@@ -48,7 +48,7 @@ begin
 			if(coring) begin //grab spikes here
 				if(TU_incre) begin
 					
-					for(i=0;i<N;i=i+1) begin
+					for(i=0;i<`N;i=i+1) begin
 						if(ops[i]) begin
 							ops_counter[i]	<= ops_counter[i] + 1;
 						end else begin
@@ -83,7 +83,7 @@ begin
 										max_index	<= max_index;
 								end
 								
-								if(max_counter==N-1) begin
+								if(max_counter==`N-1) begin
 									max_counter		<= 0;		
 									if(train_test_classify==2'b10) begin
 										testing			<= 1;
@@ -107,7 +107,7 @@ begin
 				testing					 <= 0;
 				max_index				 <= 0;
 				max_val					 <= 0;
-					for(zero_loop=0;zero_loop<N;zero_loop=zero_loop+1) begin
+					for(zero_loop=0;zero_loop<`N;zero_loop=zero_loop+1) begin
 						ops_counter[zero_loop] <= 0;
 					end
 			end
@@ -118,7 +118,7 @@ begin
 				classifying				 <= 0;
 				max_index				 <= 0;
 				max_val					 <= 0;
-					for(zero_loop=0;zero_loop<N;zero_loop=zero_loop+1) begin
+					for(zero_loop=0;zero_loop<`N;zero_loop=zero_loop+1) begin
 						ops_counter[zero_loop] <= 0;
 					end
 			end
