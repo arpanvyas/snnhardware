@@ -7,7 +7,8 @@ class param:
 	pixel_x = 28
 	Prest = 0
 	m = pixel_x*pixel_x #Number of neurons in first layer
-	n =  8  #Number of neurons in second layer
+	n1 =  64  #Number of neurons in second layer
+        n = 8
 	Pmin = -500*scale
 	# Pth = 5
 	# D = 0.7

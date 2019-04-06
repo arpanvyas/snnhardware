@@ -79,24 +79,33 @@ f.close()
 
 
 
-synapse = np.zeros((par.n,par.m))
-
-
-for i in range(par.n):
+synapse = np.zeros((par.n1,par.m))
+for i in range(par.n1):
  	for j in range(par.m):
  		a = random.uniform(0,0.4*par.scale)
  		synapse[i][j] = a
 files_all = []
-
-for i in range(par.n):
-    fl = open('../ver/FEED/init_weight_h1_'+str(i)+'.dat','w')
+for i in range(par.n1):
+    fl = open('../ver/FEED/init_weight'+str(i)+'.dat','w')
     for j in range(par.m):
         s = int2bin(synapse[i][j],par.fr_bits, par.fr_bits+par.int_bits)
         fl.write(s + '\n')
     fl.close()
 
 
-print int2bin(.4,12,24)
+
+synapse = np.zeros((par.n,par.n1))
+for i in range(par.n):
+ 	for j in range(par.n1):
+ 		a = random.uniform(0,0.4*par.scale)
+ 		synapse[i][j] = a
+files_all = []
+for i in range(par.n):
+    fl = open('../ver/FEED/init_weight'+str(i)+'.dat','w')
+    for j in range(par.n1):
+        s = int2bin(synapse[i][j],par.fr_bits, par.fr_bits+par.int_bits)
+        fl.write(s + '\n')
+    fl.close()
 
 
 
